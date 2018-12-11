@@ -222,4 +222,12 @@ class MToWStepView(ctx : Context) : View(ctx) {
             }
         }
     }
+
+    companion object {
+        fun create(activity: Activity) : MToWStepView {
+            val view : MToWStepView = MToWStepView(activity)
+            activity.setContentView(view)
+            return view 
+        }
+    }
 }
