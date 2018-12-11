@@ -19,3 +19,13 @@ val scDiv : Double = 0.51
 val color : Int = Color.parseColor("#6A1B9A")
 val strokeFactor : Int = 90
 val sizeFactor : Float = 2.7f
+
+fun Int.inverse() : Float = 1f / this
+
+fun Float.divideScale(i : Int, n : Int) : Float = Math.min(n.inverse(), Math.max(0f, this - i * n.inverse())) * n
+
+fun Float.scaleFactor() : Float = Math.floor(this / scDiv).toFloat()
+
+fun Float.mirrorValue(a : Int, b : Int) : Float = (1 - scaleFactor()) * a.inverse() + scaleFactor() * b.inverse()
+
+fun Float.updateScale(dir : Float, a : Int, b : Int) : Float = dir * scGap * mirrorValue(a, b)
