@@ -11,7 +11,6 @@ import android.graphics.Color
 import android.view.View
 import android.view.MotionEvent
 import android.content.Context
-import android.graphics.PointF
 
 val nodes : Int = 5
 val lines : Int = 2
@@ -20,7 +19,7 @@ val scDiv : Double = 0.51
 val color : Int = Color.parseColor("#6A1B9A")
 val strokeFactor : Int = 90
 val sizeFactor : Float = 2.7f
-val mDeg : Float = 30f
+val mDeg : Float = 45f
 
 fun Int.inverse() : Float = 1f / this
 
@@ -149,7 +148,7 @@ class MToWStepView(ctx : Context) : View(ctx) {
 
         fun draw(canvas : Canvas, paint : Paint) {
             canvas.drawMToWNode(i, state.scale, paint)
-            next?.draw(canvas, paint)
+            prev?.draw(canvas, paint)
         }
 
         fun update(cb : (Int, Float) -> Unit) {
@@ -163,7 +162,7 @@ class MToWStepView(ctx : Context) : View(ctx) {
         }
 
         fun getNext(dir : Int, cb : () -> Unit) : MToWNode {
-            var curr : MToWNode? = this
+            var curr : MToWNode? = prev
             if (dir == 1) {
                 curr = next
             }
@@ -176,14 +175,11 @@ class MToWStepView(ctx : Context) : View(ctx) {
     }
 
     data class MToWStep(var i : Int) {
-        private val root : MToWNode = MToWNode()
-
-        private var curr : MToWNode = root
-
+        private var curr : MToWNode = MToWNode()
         private var dir : Int = 1
 
         fun draw(canvas : Canvas, paint : Paint) {
-            root.draw(canvas, paint)
+            curr.draw(canvas, paint)
         }
 
         fun update(cb : (Int, Float) -> Unit) {
@@ -227,7 +223,7 @@ class MToWStepView(ctx : Context) : View(ctx) {
         fun create(activity: Activity) : MToWStepView {
             val view : MToWStepView = MToWStepView(activity)
             activity.setContentView(view)
-            return view 
+            return view
         }
     }
 }
