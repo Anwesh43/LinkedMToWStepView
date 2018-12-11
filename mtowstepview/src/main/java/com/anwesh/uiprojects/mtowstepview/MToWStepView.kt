@@ -20,6 +20,7 @@ val color : Int = Color.parseColor("#6A1B9A")
 val strokeFactor : Int = 90
 val sizeFactor : Float = 2.7f
 val mDeg : Float = 45f
+val DELAY : Long = 25
 
 fun Int.inverse() : Float = 1f / this
 
@@ -107,7 +108,7 @@ class MToWStepView(ctx : Context) : View(ctx) {
             if (animated) {
                 cb()
                 try {
-                    Thread.sleep(50)
+                    Thread.sleep(DELAY)
                     view.invalidate()
                 } catch(ex : Exception) {
 
