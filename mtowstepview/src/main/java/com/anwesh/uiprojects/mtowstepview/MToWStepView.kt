@@ -174,7 +174,7 @@ class MToWStepView(ctx : Context) : View(ctx) {
     }
 
     data class MToWStep(var i : Int) {
-        private val root : MToWNode = MToWNode(0)
+        private val root : MToWNode = MToWNode()
 
         private var curr : MToWNode = root
 
@@ -195,6 +195,29 @@ class MToWStepView(ctx : Context) : View(ctx) {
 
         fun startUpdating(cb : () -> Unit) {
             curr.startUpdating(cb)
+        }
+    }
+
+    data class Renderer(var view : MToWStepView) {
+
+        private val animator : Animator = Animator(view)
+
+        private var mtws : MToWStep = MToWStep(0)
+
+        fun render(canvas : Canvas, paint : Paint) {
+            canvas.drawColor(Color.parseColor("#BDBDBD"))
+            mtws.draw(canvas, paint)
+            animator.animate {
+                mtws.update {i, scl ->
+                    animator.stop()
+                }
+            }
+        }
+
+        fun handleTap() {
+            mtws.startUpdating {
+                animator.start()
+            }
         }
     }
 }
